@@ -1,0 +1,32 @@
+# Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
+
+client_id = "f87f368204dde0911cd57a908b09612d"
+application_url = "https://moved-expires-postage-wake.trycloudflare.com"
+embedded = true
+name = "Listly"
+handle = "listly"
+
+[webhooks]
+api_version = "2024-10"
+
+  [[webhooks.subscriptions]]
+  topics = [ "app/uninstalled" ]
+  uri = "/webhooks/app/uninstalled"
+
+[access_scopes]
+# Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
+scopes = "write_products"
+
+[auth]
+redirect_urls = [
+  "https://moved-expires-postage-wake.trycloudflare.com/auth/callback",
+  "https://moved-expires-postage-wake.trycloudflare.com/auth/shopify/callback",
+  "https://moved-expires-postage-wake.trycloudflare.com/api/auth/callback"
+]
+
+[pos]
+embedded = false
+
+[build]
+dev_store_url = "oak-testing-store.myshopify.com"
+automatically_update_urls_on_dev = true
