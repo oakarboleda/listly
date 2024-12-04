@@ -1,10 +1,10 @@
 # Learn more about configuring your app at https://shopify.dev/docs/apps/tools/cli/configuration
 
 client_id = "f87f368204dde0911cd57a908b09612d"
-application_url = "https://moved-expires-postage-wake.trycloudflare.com"
+application_url = "https://shoes-reg-ne-perspectives.trycloudflare.com"
 embedded = true
-name = "Listly"
-handle = "listly"
+name = "My_Listly"
+handle = "My_listly"
 
 [webhooks]
 api_version = "2024-10"
@@ -15,13 +15,13 @@ api_version = "2024-10"
 
 [access_scopes]
 # Learn more at https://shopify.dev/docs/apps/tools/cli/configuration#access_scopes
-scopes = "write_products"
+scopes = "read_content,read_customers,read_files,read_publications,unauthenticated_read_content,write_content,write_customers,write_files,write_online_store_navigation,write_online_store_pages,write_products,write_publications,read_orders"
 
 [auth]
 redirect_urls = [
-  "https://moved-expires-postage-wake.trycloudflare.com/auth/callback",
-  "https://moved-expires-postage-wake.trycloudflare.com/auth/shopify/callback",
-  "https://moved-expires-postage-wake.trycloudflare.com/api/auth/callback"
+  "https://shoes-reg-ne-perspectives.trycloudflare.com/auth/callback",
+  "https://shoes-reg-ne-perspectives.trycloudflare.com/auth/shopify/callback",
+  "https://shoes-reg-ne-perspectives.trycloudflare.com/api/auth/callback"
 ]
 
 [pos]
@@ -30,3 +30,4 @@ embedded = false
 [build]
 dev_store_url = "oak-testing-store.myshopify.com"
 automatically_update_urls_on_dev = true
+include_config_on_deploy = true

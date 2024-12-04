@@ -30,3 +30,41 @@ model Session {
   collaborator  Boolean?  @default(false)
   emailVerified Boolean?  @default(false)
 }
+
+model User {
+  id          Int          @id @default(autoincrement())
+  shopifyId   String       @unique
+  email       String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  wishlists   Wishlist[]
+}
+
+model Wishlist {
+  id        Int       @id @default(autoincrement())
+  user      User      @relation(fields: [userId], references: [id])
+  userId    Int
+  name      String
+  items     WishlistItem[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model WishlistItem {
+  id          Int       @id @default(autoincrement())
+  wishlist    Wishlist  @relation(fields: [wishlistId], references: [id])
+  wishlistId  Int
+  productId   String
+  productName String
+  productImage String
+  price       Float
+  createdAt   DateTime  @default(now())
+}
+
+model Orders {
+
+}
+
+model Products {
+  
+}
