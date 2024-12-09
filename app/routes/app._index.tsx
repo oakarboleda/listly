@@ -21,9 +21,6 @@ import { useLoaderData } from "@remix-run/react";
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { admin } = await authenticate.admin(request);
   await authenticate.admin(request);
-
- 
-
   const response = await admin.graphql(
     `#graphql
       query getProducts {
@@ -50,6 +47,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
                 }
               }
               totalInventory
+              combinedListing {
+                parentProduct {
+                  totalInventory
+                }
+              }
               
             }
           }
@@ -57,36 +59,40 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         }
       `
   );
+  
 
   const responseJson = await response.json();
-  // const getOrdersJson = await getOrders.json();
   const products = responseJson.data.products.edges.map((edge: any) => edge.node);
-  // const orders = getOrders.data.orders.edges.map((edge: any) => edge.node);
 
   return { products };
 };
 export const action = async ({ request }: ActionFunctionArgs) => {
 };
+// Helper function to generate random numbers
+const generateRandomSales = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+const randomSales = generateRandomSales(0, 1000); // Generate random sales between 0 and 1000
+
 
 export default function Index() {
   const { products } = useLoaderData<typeof loader>();
-  // const { orders } = useLoaderData<typeof loader>();
-  const rows = products.map((product: any) => [
-    <img width={150} src={product.media.edges[0]?.node.preview.image.url} alt={product.title} />,
-    product.title,
-    `$${product.priceRangeV2.minVariantPrice.amount}`,
-    product.totalSales,
-    product.totalInventory,
-    `$${(product.totalSales * product.priceRangeV2.minVariantPrice.amount).toFixed(2)}`,
-  ]);
+  const rows = products.map((product: any) => {
+    const randomSales = generateRandomSales(0, 1000); // Generate random sales between 0 and 1000
+    const totalSalesValue = randomSales * parseFloat(product.priceRangeV2.minVariantPrice.amount); // Calculate total sales value
+    return [
+      <img width={150} src={product.media.edges[0]?.node.preview.image.url} alt={product.title} />,
+      product.title,
+      `$${product.priceRangeV2.minVariantPrice.amount}`,
+      randomSales,
+      product.totalInventory,
+      `$${totalSalesValue.toFixed(2)}`,
+    ];
+  });
 
   const fetcher = useFetcher<typeof action>();
 
   const shopify = useAppBridge();
-
-  useEffect(() => {
-  }, []);
-
 
   return (
     <Page fullWidth>

@@ -60,11 +60,3 @@ model WishlistItem {
   price       Float
   createdAt   DateTime  @default(now())
 }
-
-model Orders {
-
-}
-
-model Products {
-  
-}
